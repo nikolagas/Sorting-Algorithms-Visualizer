@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Algorithm Visualizer</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <div class="visualization-container">
+        <div id="graph">
+          </div>      
+      </div>      
+    <div class="controls-container">
+    <button id="generate-array-btn">Generate New Array</button>
+        <div id="slider-controls">
+            <div id="slider-container">
+            <label for="array-size-slider">Array Size:</label>
+            <input type="range" id="array-size-slider" min="5" max="100" value="20">
+            </div>
+            <div id="slider-container">
+            <label for="speed-slider">Speed:</label>
+            <input type="range" id="speed-slider" min="1" max="10" value="5">
+            </div>
+            <div id="algorithm-dropdown">
+                <label for="algorithm-select">Algorithm:</label>
+                <select id="algorithm-select">
+                <option value="bubble-sort">Bubble Sort</option>
+                <option value="counting-sort">Counting Sort</option>
+                <option value="insertion-sort">Insertion Sort</option>
+                <option value="merge-sort">Merge Sort</option>
+                <option value="quick-sort">Quick Sort</option>
+                <option value="heap-sort">Heap Sort</option>
+                </select>
+            </div>
+        </div>
+        <div id="sorting-controls">
+            <button id="start-btn">Start Sorting</button>
+            <button id="pause-btn">Pause Sorting</button>
+            <button id="resume-btn">Resume Sorting</button>
+            <button id="stop-btn">Stop Sorting</button>
+        </div>
+      </div>
+    <script type="module" src="scripts/bubbleSort.js"></script>      
+    <script type="module" src="scripts/index.js"></script>
+    <script type="module" src="scripts/countingSort.js"></script>
+    <script type="module" src="scripts/utils.js"></script>
+
+</body>
+</html>
