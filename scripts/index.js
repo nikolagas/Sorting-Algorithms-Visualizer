@@ -1,17 +1,34 @@
-import { handleGenerateArray, startSorting, pauseSorting, resumeSorting, stopSorting } from './utils.js';
+import { handleGenerateArray, 
+    startSorting, 
+    pauseSorting, 
+    resumeSorting, 
+    stopSorting,
+    enableControls
+        } from './utils.js';
 
 
-const generateArrayButton = document.getElementById('generate-array-btn');
+export const generateArrayButton = document.getElementById('generate-array-btn');
 generateArrayButton.addEventListener('click', handleGenerateArray);
 
-const startButton = document.getElementById('start-btn');
+export const startButton = document.getElementById('start-btn');
 startButton.addEventListener('click', startSorting);
   
-const pauseButton = document.getElementById('pause-btn');
+export const pauseButton = document.getElementById('pause-btn');
 pauseButton.addEventListener('click', pauseSorting);
 
-const resumeButton = document.getElementById('resume-btn');
+export const resumeButton = document.getElementById('resume-btn');
 resumeButton.addEventListener('click', resumeSorting);
 
-const stopButton = document.getElementById('stop-btn');
+export const stopButton = document.getElementById('stop-btn');
 stopButton.addEventListener('click', stopSorting);
+
+export const speedSlider = document.getElementById('speed-slider');
+export const arraySizeSlider = document.getElementById('array-size-slider');
+export const algorithmDropdown = document.getElementById('algorithm-select');
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    handleGenerateArray();
+    enableControls();
+    });
+

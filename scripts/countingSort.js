@@ -1,7 +1,7 @@
-import { delay } from './utils.js';
+import { delay, pauseFlag } from './utils.js';
 
 
-export async function countingSort(array, delayDuration, pauseFlag) {
+export async function countingSort(array, delayDuration) {
     const min = Math.min(...array);
     const max = Math.max(...array);
     const count = new Array(max - min + 1).fill(0);
@@ -18,7 +18,7 @@ export async function countingSort(array, delayDuration, pauseFlag) {
             // Wait until sorting is unpaused
             await pauseFlag.promise;
         }
-
+        
     array[sortedIndex] = i;
     sortedIndex++;
     count[i - min]--;
@@ -32,19 +32,22 @@ export async function countingSort(array, delayDuration, pauseFlag) {
         }
     }
 }
-
-    return array;
+    return Promise.resolve();
 }
 
 function updateGraph(array) {
     const graph = document.getElementById('graph');
     graph.innerHTML = '';
-
+  
+    if (pauseFlag.stopped) {
+      return;
+    }
+  
     array.forEach(height => {
-        const bar = document.createElement('div');
-        bar.className = 'bar';
-        bar.style.height = `${height}%`;
-        graph.appendChild(bar);
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      bar.style.height = `${height}%`;
+      graph.appendChild(bar);
     });
-}
+  }
   

@@ -1,6 +1,6 @@
-import { delay } from './utils.js';
+import { delay, pauseFlag } from './utils.js';
   
-  export async function bubbleSort(array, delayDuration, pauseFlag) {
+  export async function bubbleSort(array, delayDuration) {
     const length = array.length;
   
     for (let i = 0; i < length - 1; i++) {
@@ -26,12 +26,16 @@ import { delay } from './utils.js';
       }
     }
   
-    return array; // Return the sorted array
+    return Promise.resolve();
   }
   
   function updateGraph(array) {
     const graph = document.getElementById('graph');
     graph.innerHTML = '';
+  
+    if (pauseFlag.stopped) {
+      return; 
+    }
   
     array.forEach(height => {
       const bar = document.createElement('div');
