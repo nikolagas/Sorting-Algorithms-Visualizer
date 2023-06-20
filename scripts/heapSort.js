@@ -1,4 +1,4 @@
-import { delay, pauseFlag } from './utils.js';
+import { delay, pauseFlag, updateGraph } from './utils.js';
 
 export async function heapSort(array, delayDuration) {
   const length = array.length;
@@ -31,7 +31,7 @@ export async function heapSort(array, delayDuration) {
     await heapify(array, i, 0, delayDuration);
   }
 
-  return Promise.resolve();
+  return array;
 }
 
 async function heapify(array, length, root, delayDuration) {
@@ -66,19 +66,3 @@ async function heapify(array, length, root, delayDuration) {
   }
 }
 
-function updateGraph(array) {
-    const graph = document.getElementById('graph');
-    graph.innerHTML = '';
-  
-    if (pauseFlag.stopped) {
-      return; // Skip creating bars if we clear the graph
-    }
-  
-    array.forEach(height => {
-      const bar = document.createElement('div');
-      bar.className = 'bar';
-      bar.style.height = `${height}%`;
-      graph.appendChild(bar);
-    });
-  }
-  

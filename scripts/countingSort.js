@@ -1,5 +1,4 @@
-import { delay, pauseFlag } from './utils.js';
-
+import { delay, pauseFlag, updateGraph } from './utils.js';
 
 export async function countingSort(array, delayDuration) {
     const min = Math.min(...array);
@@ -15,7 +14,6 @@ export async function countingSort(array, delayDuration) {
     for (let i = min; i <= max; i++) {
         while (count[i - min] > 0) {
         if (pauseFlag.paused) {
-            // Wait until sorting is unpaused
             await pauseFlag.promise;
         }
         
@@ -28,26 +26,9 @@ export async function countingSort(array, delayDuration) {
     await delay(delayDuration);
 
     if (pauseFlag.stopped) {
-        return; // Exit the function if sorting is stopped
+        return;
         }
     }
 }
-    return Promise.resolve();
+    return array;
 }
-
-function updateGraph(array) {
-    const graph = document.getElementById('graph');
-    graph.innerHTML = '';
-  
-    if (pauseFlag.stopped) {
-      return;
-    }
-  
-    array.forEach(height => {
-      const bar = document.createElement('div');
-      bar.className = 'bar';
-      bar.style.height = `${height}%`;
-      graph.appendChild(bar);
-    });
-  }
-  
