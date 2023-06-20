@@ -9,6 +9,8 @@ import { generateArrayButton,
   speedSlider,
   arraySizeSlider,
   algorithmDropdown } from './index.js';
+import { insertionSort } from './insertionSort.js';
+import { quickSort } from './quickSort.js';
 
 export let pauseFlag = { paused: false, promise: null, stopped: false };
 let randomArray = [];
@@ -18,6 +20,8 @@ const sortingFunctions = {
   'bubble-sort': bubbleSort,
   'counting-sort': countingSort,
   'heap-sort': heapSort,
+  'insertion-sort': insertionSort,
+  'quick-sort': quickSort
 };
 
 export function generateRandomArray(size) {
@@ -34,9 +38,25 @@ export function clearGraph() {
     graph.innerHTML = '';
   }
   
-export function visualizeArray(array) {
+export function displayGraph(array) {
     const graph = document.getElementById('graph');
     clearGraph();
+  
+    array.forEach(height => {
+      const bar = document.createElement('div');
+      bar.className = 'bar';
+      bar.style.height = `${height}%`;
+      graph.appendChild(bar);
+    });
+  }
+
+export function updateGraph(array) {
+    const graph = document.getElementById('graph');
+    graph.innerHTML = '';
+  
+    if (pauseFlag.stopped) {
+      return;
+    }
   
     array.forEach(height => {
       const bar = document.createElement('div');
@@ -50,12 +70,12 @@ export function handleGenerateArray() {
     startButton.disabled = false;
     const size = arraySizeSlider.value;
     randomArray = generateRandomArray(size);
-    visualizeArray(randomArray);
+    displayGraph(randomArray);
     
     console.log('Generated Array:', randomArray);
   }
   
-export async function startSorting() {
+  export async function startSorting() {
     const selectedAlgorithm = algorithmDropdown.value;
     
     if (isSorting) {
@@ -73,7 +93,11 @@ export async function startSorting() {
     try {
       const sortingFunction = sortingFunctions[selectedAlgorithm];
       await sortingFunction(randomArray, delayDuration, pauseFlag);
-      console.log('Successful sorting');
+      if (!pauseFlag.stopped) {
+        console.log('Successful sorting');
+      } else {
+        console.log('Sorting stopped');
+      }
     } catch (error) {
       console.error('Error occurred during sorting:', error);
     } finally {
@@ -82,6 +106,7 @@ export async function startSorting() {
       isSorting = false; // Set isSorting to false after sorting is finished
     }
   }
+  
   
 export function pauseSorting() {
     if (!pauseFlag.paused) {
